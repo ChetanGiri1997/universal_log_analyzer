@@ -58,7 +58,6 @@ Once the services are running, you can access them at the following endpoints:
 | **API** | http://localhost:8000 | REST API endpoints |
 | **API Docs** | http://localhost:8000/docs | Interactive API documentation |
 | **Elasticsearch** | http://localhost:9200 | Elasticsearch cluster |
-| **Kibana** (if configured) | http://localhost:5601 | Elasticsearch visualization |
 | **MongoDB** | mongodb://localhost:27017 | Database connection |
 
 ## 📁 Project Structure
