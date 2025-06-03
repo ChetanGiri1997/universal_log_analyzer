@@ -25,8 +25,8 @@ The system consists of the following components:
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
-cd Advanced_Log_Analyzer/Log_Analyzer
+git clone https://github.com/ChetanGiri1997/universal_log_analyzer
+cd universal_log_analyzer
 ```
 
 ### 2. Build and Start Services
