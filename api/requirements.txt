@@ -1,0 +1,12 @@
+fastapi
+uvicorn[standard]
+python-multipart
+pydantic
+pymongo
+drain3
+python-dateutil
+numpy
+scikit-learn
+pandas
+requests
+aiofiles

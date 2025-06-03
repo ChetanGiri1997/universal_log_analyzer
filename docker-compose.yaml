@@ -1,0 +1,67 @@
+services:
+  frontend:
+    build: ./Frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    networks:
+      - log-network
+
+  api:
+    build: ./api
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_URL=mongodb://mongo:27017
+      - MONGODB_DB_NAME=log_analyzer
+    depends_on:
+      - mongo
+    volumes:
+      - ./uploads:/app/uploads
+    networks:
+      - log-network
+
+  mongo:
+    image: mongo:6.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+      - ./mongo/init.js:/docker-entrypoint-initdb.d/init.js:ro
+    networks:
+      - log-network
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.0
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    networks:
+      - log-network
+
+  fluent-bit:
+    build: ./fluent-bit
+    ports:
+      - "24224:24224"
+    depends_on:
+      - api
+    volumes:
+      - /var/log:/var/log:ro
+      - ./fluent-bit/fluent-bit.conf:/fluent-bit/conf/fluent-bit.conf
+    networks:
+      - log-network
+
+volumes:
+  mongo_data:
+  es_data:
+
+networks:
+  log-network:
+    driver: bridge
